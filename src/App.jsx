@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
-import './App.css';
-
-// Fungsi untuk memformat angka menjadi Rupiah
-const formatRupiah = (value) => {
-  return new Intl.NumberFormat('id-ID', {
-    style: 'currency',
-    currency: 'IDR',
-    minimumFractionDigits: 0,
-  }).format(value);
-};
+import Navbar from './components/Navbar';
+import Sidebar from './components/Sidebar';
+import TransactionList from './components/TransactionList';
+import Modal from './components/Modal';
+import { formatRupiah } from './utils/formatRupiah';
+import './App.css'
 
 function App() {
   // State untuk menyimpan daftar wallet
@@ -33,10 +29,8 @@ function App() {
   // State untuk menyimpan input baru
   const [newWalletName, setNewWalletName] = useState('');
   const [newWalletAmount, setNewWalletAmount] = useState('');
-
   const [newCategoryName, setNewCategoryName] = useState('');
   const [newCategoryAmount, setNewCategoryAmount] = useState('');
-
   const [newTransactionDescription, setNewTransactionDescription] = useState('');
   const [newTransactionAmount, setNewTransactionAmount] = useState('');
   const [newTransactionDate, setNewTransactionDate] = useState('');
@@ -44,10 +38,8 @@ function App() {
   // State untuk modal
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
   const [isCategoryEditModalOpen, setIsCategoryEditModalOpen] = useState(false);
-
   const [isTransactionModalOpen, setIsTransactionModalOpen] = useState(false);
   const [isTransactionEditModalOpen, setIsTransactionEditModalOpen] = useState(false);
 
@@ -79,7 +71,7 @@ function App() {
     setCategories([...categories, newCategory]);
     setNewCategoryName('');
     setNewCategoryAmount('');
-    setIsCategoryModalOpen(false); 
+    setIsCategoryModalOpen(false);
   };
 
   // Fungsi untuk menghitung total transaksi dan jumlah transaksi
@@ -120,7 +112,7 @@ function App() {
   };
 
   // Fungsi untuk memulai edit wallet
-  const startEditing = (wallet) => {
+  const startEditingWallet = (wallet) => {
     setEditingWallet(wallet);
     setNewWalletName(wallet.name);
     setNewWalletAmount(wallet.amount);
@@ -186,428 +178,107 @@ function App() {
 
   return (
     <div className="min-h-screen bg-blue-100 w-screen p-10">
-      {/* Navbar */}
-      <nav className="bg-yellow-50 p-4 shadow-sm flex justify-between items-center">
-        <div className="flex items-center space-x-8">
-          <div className="flex items-center space-x-2">
-            <div className="w-5 h-5 bg-green-400"></div>
-            <span className="text-xl font-bold text-gray-800">My Wallet</span>
-          </div>
-          <input
-            type="text"
-            placeholder="Search"
-            className="px-4 py-2 border rounded-lg focus:outline-none bg-slate-300"
-          />
-        </div>
-
-        {/* User Icon */}
-        <div className="flex items-center space-x-3">
-          <button className="bg-transparent border-none outline-none p-0">
-            <img 
-              src="https://cdn-icons-png.flaticon.com/512/565/565422.png" 
-              alt="Notif Icon" 
-              className="w-5 h-5"
-            />          
-          </button>
-          <div className="w-8 h-8 rounded-full bg-blue-500"></div>
-        </div>
-      </nav>
-
-      {/* Main Content Layout */}
+      <Navbar />
       <div className="flex">
-        {/* Sidebar */}
-        <aside className="w-1/4 bg-white p-6 border-r">
-          {/* Wallets */}
-          <div className="mb-6 flex justify-between items-center">
-            <h2 className="text-lg font-semibold text-gray-600 mb-4">Wallets</h2>
-            <button
-              onClick={() => setIsModalOpen(true)}
-              className="bg-blue-500 text-white p-2 rounded-full hover:bg-blue-700 transition"
-            >
-              <img 
-                src="https://icons.veryicon.com/png/o/miscellaneous/o2o-middle-school-project/plus-104.png" 
-                alt="Plus Icon" 
-                className="w-6 h-6"
-              />
-            </button>
-          </div>
-
-          <ul>
-            {wallets.map(wallet => (
-              <li key={wallet.id} className="flex items-center justify-between py-3">
-                <div className="flex items-center">
-                  <span className="w-3 h-3 bg-purple-600 rounded-full mr-3"></span>
-                  <p>{wallet.name}</p>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <p className="font-semibold text-gray-700">{formatRupiah(wallet.amount)}</p>
-                  <button
-                    onClick={() => startEditing(wallet)}
-                    className="bg-blue-500 hover:bg-blue-700 transition p-1"
-                  >
-                    <img 
-                      src="https://static-00.iconduck.com/assets.00/edit-icon-2048x2048-6svwfwto.png" 
-                      alt="Edit Icon" 
-                      className="w-5 h-5"
-                    />                    
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul>
-
-          {/* Categories */}
-          <div className="mt-8">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg font-semibold text-gray-600">Categories</h2>
-              <button
-                onClick={() => setIsCategoryModalOpen(true)}
-                className="bg-blue-500 text-white p-2 rounded-full hover:bg-blue-700 transition"
-              >
-                <img 
-                  src="https://icons.veryicon.com/png/o/miscellaneous/o2o-middle-school-project/plus-104.png" 
-                  alt="Plus Icon" 
-                  className="w-6 h-6"
-                />
-              </button>
-            </div>
-            <ul>
-              {categories.map(category => (
-                <li key={category.id} className="flex items-center justify-between py-3">
-                  <div className="flex items-center">
-                    <span className="w-3 h-3 bg-green-600 rounded-full mr-3"></span>
-                    <p>{category.name}</p>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <p className="font-semibold text-gray-700">{formatRupiah(category.amount)}</p>
-                    <button
-                      onClick={() => startEditingCategory(category)}
-                      className="bg-blue-500 hover:bg-blue-700 transition p-1"
-                    >
-                      <img 
-                        src="https://static-00.iconduck.com/assets.00/edit-icon-2048x2048-6svwfwto.png" 
-                        alt="Edit Icon" 
-                        className="w-5 h-5"
-                      />                    
-                    </button>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </aside>
-
-        {/* Main Content */}
-        <main className="flex-1 p-8 bg-white">
-          {/* Header */}
-          <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-semibold text-gray-800">Daftar Transaksi</h1>
-            <button 
-              className="bg-blue-500 text-white p-2 rounded-full hover:bg-blue-700 transition"
-              onClick={() => setIsTransactionModalOpen(true)}
-            >
-              <img 
-                src="https://icons.veryicon.com/png/o/miscellaneous/o2o-middle-school-project/plus-104.png" 
-                alt="Plus Icon" 
-                className="w-6 h-6"
-              />
-            </button>
-          </div>
-
-          {/* Tampilkan jumlah transaksi dan total nominal */}
-          <div className="mt-4 flex justify-between">
-            <p className="text-gray-600 text-lg">
-              Jumlah Transaksi: {totalTransactions}
-            </p>
-            <p className="text-gray-600 text-lg">
-              Total Pengeluaran: {formatRupiah(totalAmount*-1)}
-            </p>
-          </div>
-          
-          {/* Transaction List */}
-          <div className="mt-1">
-            <div className="border rounded-lg p-4 bg-white">
-              <h2 className="text-lg font-semibold text-gray-600">Transaksi</h2>
-              <div className="mt-4">
-                {transactions.map(transaction => (
-                  <div key={transaction.id} className="flex justify-between py-2 border-b">
-                    <div>
-                      <p>{transaction.description}</p>
-                      <p className="text-gray-500 text-sm">{transaction.date}</p>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <p className={transaction.amount < 0 ? "text-red-500" : "text-green-500"}>
-                        {formatRupiah(transaction.amount)}
-                      </p>
-                      <button
-                        onClick={() => startEditingTransaction(transaction)}
-                        className="bg-blue-500 hover:bg-blue-700 transition p-1"
-                      >
-                        <img 
-                          src="https://static-00.iconduck.com/assets.00/edit-icon-2048x2048-6svwfwto.png" 
-                          alt="Edit Icon" 
-                          className="w-5 h-5"
-                        />                    
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </main>
+        <Sidebar
+          wallets={wallets}
+          categories={categories}
+          formatRupiah={formatRupiah}
+          startEditingWallet={startEditingWallet}
+          startEditingCategory={startEditingCategory}
+          setIsModalOpen={setIsModalOpen}
+          setIsCategoryModalOpen={setIsCategoryModalOpen}
+        />
+        <TransactionList
+          transactions={transactions}
+          totalTransactions={totalTransactions}
+          totalAmount={totalAmount}
+          formatRupiah={formatRupiah}
+          startEditingTransaction={startEditingTransaction}
+          setIsTransactionModalOpen={setIsTransactionModalOpen}
+        />
       </div>
 
-      {/* Modal Tambah Wallet */}
       {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
-            <h2 className="text-xl font-bold mb-4">Tambah Wallet Baru</h2>
-            <input
-              type="text"
-              placeholder="Nama Wallet"
-              value={newWalletName}
-              onChange={(e) => setNewWalletName(e.target.value)}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none mb-4 bg-slate-300"
-            />
-            <input
-              type="number"
-              placeholder="Jumlah"
-              value={newWalletAmount}
-              onChange={(e) => setNewWalletAmount(e.target.value)}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none mb-4 bg-slate-300"
-            />
-            <div className="flex justify-between">
-              <button
-                onClick={addWallet}
-                className="bg-blue-500 text-white px-4 py-2 rounded-lg"
-              >
-                Tambah Wallet
-              </button>
-              <button
-                onClick={() => setIsModalOpen(false)}
-                className="bg-gray-500 text-white px-4 py-2 rounded-lg"
-              >
-                Batal
-              </button>
-            </div>
-          </div>
-        </div>
+        <Modal
+          isOpen={isModalOpen}
+          title="Tambah Wallet Baru"
+          nameValue={newWalletName}
+          amountValue={newWalletAmount}
+          setName={setNewWalletName}
+          setAmount={setNewWalletAmount}
+          handleSave={addWallet}
+          handleClose={() => setIsModalOpen(false)}
+        />
       )}
 
-      {/* Modal Edit Wallet */}
       {isEditModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
-            <h2 className="text-xl font-bold mb-4">Edit Wallet</h2>
-            <input
-              type="text"
-              placeholder="Nama Wallet"
-              value={newWalletName}
-              onChange={(e) => setNewWalletName(e.target.value)}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none mb-4 bg-slate-300"
-            />
-            <input
-              type="number"
-              placeholder="Jumlah"
-              value={newWalletAmount}
-              onChange={(e) => setNewWalletAmount(e.target.value)}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none mb-4 bg-slate-300"
-            />
-            <div className="flex justify-between">
-              <button
-                onClick={saveEditWallet}
-                className="bg-blue-500 text-white px-4 py-2 rounded-lg"
-              >
-                Simpan Perubahan
-              </button>
-              <button
-                onClick={() => deleteWallet(editingWallet.id)}
-                className="bg-red-500 text-white px-4 py-2 rounded-lg"
-              >
-                Hapus Wallet
-              </button>
-              <button
-                onClick={() => setIsEditModalOpen(false)}
-                className="bg-gray-500 text-white px-4 py-2 rounded-lg"
-              >
-                Batal
-              </button>
-            </div>
-          </div>
-        </div>
+        <Modal
+          isOpen={isEditModalOpen}
+          title="Edit Wallet"
+          nameValue={newWalletName}
+          amountValue={newWalletAmount}
+          setName={setNewWalletName}
+          setAmount={setNewWalletAmount}
+          handleSave={saveEditWallet}
+          handleClose={() => setIsEditModalOpen(false)}
+        />
       )}
-
+      
       {/* Modal Tambah Category */}
       {isCategoryModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
-            <h2 className="text-xl font-bold mb-4">Tambah Category Baru</h2>
-            <input
-              type="text"
-              placeholder="Nama Category"
-              value={newCategoryName}
-              onChange={(e) => setNewCategoryName(e.target.value)}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none mb-4 bg-slate-300"
-            />
-            <input
-              type="number"
-              placeholder="Jumlah"
-              value={newCategoryAmount}
-              onChange={(e) => setNewCategoryAmount(e.target.value)}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none mb-4 bg-slate-300"
-            />
-            <div className="flex justify-between">
-              <button
-                onClick={addCategory}
-                className="bg-blue-500 text-white px-4 py-2 rounded-lg"
-              >
-                Tambah Category
-              </button>
-              <button
-                onClick={() => setIsCategoryModalOpen(false)}
-                className="bg-gray-500 text-white px-4 py-2 rounded-lg"
-              >
-                Batal
-              </button>
-            </div>
-          </div>
-        </div>
+        <Modal
+          isOpen={isCategoryModalOpen}
+          title="Tambah Category Baru"
+          nameValue={newCategoryName}
+          amountValue={newCategoryAmount}
+          setName={setNewCategoryName}
+          setAmount={setNewCategoryAmount}
+          handleSave={addCategory}
+          handleClose={() => setIsCategoryModalOpen(false)}
+        />
       )}
 
       {/* Modal Edit Category */}
       {isCategoryEditModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
-            <h2 className="text-xl font-bold mb-4">Edit Category</h2>
-            <input
-              type="text"
-              placeholder="Nama Category"
-              value={newCategoryName}
-              onChange={(e) => setNewCategoryName(e.target.value)}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none mb-4 bg-slate-300"
-            />
-            <input
-              type="number"
-              placeholder="Jumlah"
-              value={newCategoryAmount}
-              onChange={(e) => setNewCategoryAmount(e.target.value)}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none mb-4 bg-slate-300"
-            />
-            <div className="flex justify-between">
-              <button
-                onClick={saveEditCategory}
-                className="bg-blue-500 text-white px-4 py-2 rounded-lg"
-              >
-                Simpan Perubahan
-              </button>
-              <button
-                onClick={() => deleteCategory(editingCategory.id)}
-                className="bg-red-500 text-white px-4 py-2 rounded-lg"
-              >
-                Hapus Category
-              </button>
-              <button
-                onClick={() => setIsCategoryEditModalOpen(false)}
-                className="bg-gray-500 text-white px-4 py-2 rounded-lg"
-              >
-                Batal
-              </button>
-            </div>
-          </div>
-        </div>
+        <Modal
+          isOpen={isCategoryEditModalOpen}
+          title="Edit Category"
+          nameValue={newCategoryName}
+          amountValue={newCategoryAmount}
+          setName={setNewCategoryName}
+          setAmount={setNewCategoryAmount}
+          handleSave={saveEditCategory}
+          handleClose={() => setIsCategoryEditModalOpen(false)}
+        />
       )}
 
       {/* Modal Tambah Transaction */}
       {isTransactionModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
-            <h2 className="text-xl font-bold mb-4">Tambah Transaksi Baru</h2>
-            <input
-              type="text"
-              placeholder="Deskripsi Transaksi"
-              value={newTransactionDescription}
-              onChange={(e) => setNewTransactionDescription(e.target.value)}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none mb-4 bg-slate-300"
-            />
-            <input
-              type="number"
-              placeholder="Jumlah"
-              value={newTransactionAmount}
-              onChange={(e) => setNewTransactionAmount(e.target.value)}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none mb-4 bg-slate-300"
-            />
-            <input
-              type="date"
-              value={newTransactionDate}
-              onChange={(e) => setNewTransactionDate(e.target.value)}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none mb-4 bg-slate-300"
-            />
-            <div className="flex justify-between">
-              <button
-                onClick={addTransaction}
-                className="bg-blue-500 text-white px-4 py-2 rounded-lg"
-              >
-                Tambah Transaksi
-              </button>
-              <button
-                onClick={() => setIsTransactionModalOpen(false)}
-                className="bg-gray-500 text-white px-4 py-2 rounded-lg"
-              >
-                Batal
-              </button>
-            </div>
-          </div>
-        </div>
+        <Modal
+          isOpen={isTransactionModalOpen}
+          title="Tambah Transaksi Baru"
+          nameValue={newTransactionDescription}
+          amountValue={newTransactionAmount}
+          setName={setNewTransactionDescription}
+          setAmount={setNewTransactionAmount}
+          handleSave={addTransaction}
+          handleClose={() => setIsTransactionModalOpen(false)}
+        />
       )}
 
       {/* Modal Edit Transaction */}
       {isTransactionEditModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
-            <h2 className="text-xl font-bold mb-4">Edit Transaksi</h2>
-            <input
-              type="text"
-              placeholder="Deskripsi Transaksi"
-              value={newTransactionDescription}
-              onChange={(e) => setNewTransactionDescription(e.target.value)}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none mb-4 bg-slate-300"
-            />
-            <input
-              type="number"
-              placeholder="Jumlah"
-              value={newTransactionAmount}
-              onChange={(e) => setNewTransactionAmount(e.target.value)}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none mb-4 bg-slate-300"
-            />
-            <input
-              type="date"
-              value={newTransactionDate}
-              onChange={(e) => setNewTransactionDate(e.target.value)}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none mb-4 bg-slate-300"
-            />
-            <div className="flex justify-between">
-              <button
-                onClick={saveEditTransaction}
-                className="bg-blue-500 text-white px-4 py-2 rounded-lg"
-              >
-                Simpan Perubahan
-              </button>
-              <button
-                onClick={() => deleteTransaction(editingTransaction.id)}
-                className="bg-red-500 text-white px-4 py-2 rounded-lg"
-              >
-                Hapus Transaksi
-              </button>
-              <button
-                onClick={() => setIsTransactionEditModalOpen(false)}
-                className="bg-gray-500 text-white px-4 py-2 rounded-lg"
-              >
-                Batal
-              </button>
-            </div>
-          </div>
-        </div>
+        <Modal
+          isOpen={isTransactionEditModalOpen}
+          title="Edit Transaksi"
+          nameValue={newTransactionDescription}
+          amountValue={newTransactionAmount}
+          setName={setNewTransactionDescription}
+          setAmount={setNewTransactionAmount}
+          handleSave={saveEditTransaction}
+          handleClose={() => setIsTransactionEditModalOpen(false)}
+        />
       )}
     </div>
   );

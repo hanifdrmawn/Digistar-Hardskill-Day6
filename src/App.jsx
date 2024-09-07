@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 
 // Fungsi untuk memformat angka menjadi Rupiah
@@ -190,7 +190,7 @@ function App() {
       <nav className="bg-yellow-50 p-4 shadow-sm flex justify-between items-center">
         <div className="flex items-center space-x-8">
           <div className="flex items-center space-x-2">
-            <div className="w-5 h-5 bg-green-400"></div> {/* Logo Placeholder */}
+            <div className="w-5 h-5 bg-green-400"></div>
             <span className="text-xl font-bold text-gray-800">My Wallet</span>
           </div>
           <input
@@ -201,12 +201,12 @@ function App() {
         </div>
 
         {/* User Icon */}
-        <div className="flex items-center space-x-6">
-          <button className="bg-transparent border-none outline-none">
+        <div className="flex items-center space-x-3">
+          <button className="bg-transparent border-none outline-none p-0">
             <img 
               src="https://cdn-icons-png.flaticon.com/512/565/565422.png" 
               alt="Notif Icon" 
-              className="w-4 h-4"
+              className="w-5 h-5"
             />          
           </button>
           <div className="w-8 h-8 rounded-full bg-blue-500"></div>
@@ -357,6 +357,166 @@ function App() {
           </div>
         </main>
       </div>
+
+      {/* Modal Tambah Wallet */}
+      {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
+            <h2 className="text-xl font-bold mb-4">Tambah Wallet Baru</h2>
+            <input
+              type="text"
+              placeholder="Nama Wallet"
+              value={newWalletName}
+              onChange={(e) => setNewWalletName(e.target.value)}
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none mb-4 bg-slate-300"
+            />
+            <input
+              type="number"
+              placeholder="Jumlah"
+              value={newWalletAmount}
+              onChange={(e) => setNewWalletAmount(e.target.value)}
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none mb-4 bg-slate-300"
+            />
+            <div className="flex justify-between">
+              <button
+                onClick={addWallet}
+                className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+              >
+                Tambah Wallet
+              </button>
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="bg-gray-500 text-white px-4 py-2 rounded-lg"
+              >
+                Batal
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal Edit Wallet */}
+      {isEditModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
+            <h2 className="text-xl font-bold mb-4">Edit Wallet</h2>
+            <input
+              type="text"
+              placeholder="Nama Wallet"
+              value={newWalletName}
+              onChange={(e) => setNewWalletName(e.target.value)}
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none mb-4 bg-slate-300"
+            />
+            <input
+              type="number"
+              placeholder="Jumlah"
+              value={newWalletAmount}
+              onChange={(e) => setNewWalletAmount(e.target.value)}
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none mb-4 bg-slate-300"
+            />
+            <div className="flex justify-between">
+              <button
+                onClick={saveEditWallet}
+                className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+              >
+                Simpan Perubahan
+              </button>
+              <button
+                onClick={() => deleteWallet(editingWallet.id)}
+                className="bg-red-500 text-white px-4 py-2 rounded-lg"
+              >
+                Hapus Wallet
+              </button>
+              <button
+                onClick={() => setIsEditModalOpen(false)}
+                className="bg-gray-500 text-white px-4 py-2 rounded-lg"
+              >
+                Batal
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal Tambah Category */}
+      {isCategoryModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
+            <h2 className="text-xl font-bold mb-4">Tambah Category Baru</h2>
+            <input
+              type="text"
+              placeholder="Nama Category"
+              value={newCategoryName}
+              onChange={(e) => setNewCategoryName(e.target.value)}
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none mb-4 bg-slate-300"
+            />
+            <input
+              type="number"
+              placeholder="Jumlah"
+              value={newCategoryAmount}
+              onChange={(e) => setNewCategoryAmount(e.target.value)}
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none mb-4 bg-slate-300"
+            />
+            <div className="flex justify-between">
+              <button
+                onClick={addCategory}
+                className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+              >
+                Tambah Category
+              </button>
+              <button
+                onClick={() => setIsCategoryModalOpen(false)}
+                className="bg-gray-500 text-white px-4 py-2 rounded-lg"
+              >
+                Batal
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal Edit Category */}
+      {isCategoryEditModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
+            <h2 className="text-xl font-bold mb-4">Edit Category</h2>
+            <input
+              type="text"
+              placeholder="Nama Category"
+              value={newCategoryName}
+              onChange={(e) => setNewCategoryName(e.target.value)}
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none mb-4 bg-slate-300"
+            />
+            <input
+              type="number"
+              placeholder="Jumlah"
+              value={newCategoryAmount}
+              onChange={(e) => setNewCategoryAmount(e.target.value)}
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none mb-4 bg-slate-300"
+            />
+            <div className="flex justify-between">
+              <button
+                onClick={saveEditCategory}
+                className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+              >
+                Simpan Perubahan
+              </button>
+              <button
+                onClick={() => deleteCategory(editingCategory.id)}
+                className="bg-red-500 text-white px-4 py-2 rounded-lg"
+              >
+                Hapus Category
+              </button>
+              <button
+                onClick={() => setIsCategoryEditModalOpen(false)}
+                className="bg-gray-500 text-white px-4 py-2 rounded-lg"
+              >
+                Batal
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Modal Tambah Transaction */}
       {isTransactionModalOpen && (

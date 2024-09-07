@@ -19,14 +19,15 @@ function App() {
 
   // State untuk menyimpan daftar categories
   const [categories, setCategories] = useState([
-    { id: 1, name: 'Bills', amount: 255000000 },
-    { id: 2, name: 'Education', amount: 120000000 },
+    { id: 1, name: 'Bills', amount: 124000000 },
+    { id: 2, name: 'Education', amount: 3500000 },
   ]);
 
   // State untuk menyimpan daftar transaksi
   const [transactions, setTransactions] = useState([
-    { id: 1, date: '2020-01-15', description: 'Restaurants & Cafe', amount: -99000 },
-    { id: 2, date: '2020-01-16', description: 'Clothes & Shopping', amount: -2357000 },
+    { id: 1, date: '2024-06-15', description: 'Restaurants & Cafe', amount: -100000 },
+    { id: 2, date: '2024-07-16', description: 'Clothes & Shopping', amount: -1250000 },
+    { id: 3, date: '2024-08-01', description: 'Hair & Spa', amount: -250000 },
   ]);
 
   // State untuk menyimpan input baru
@@ -65,7 +66,7 @@ function App() {
     setWallets([...wallets, newWallet]);
     setNewWalletName('');
     setNewWalletAmount('');
-    setIsModalOpen(false); // Menutup modal setelah menambah wallet
+    setIsModalOpen(false);
   };
 
   // Fungsi untuk menambahkan category baru
@@ -78,7 +79,7 @@ function App() {
     setCategories([...categories, newCategory]);
     setNewCategoryName('');
     setNewCategoryAmount('');
-    setIsCategoryModalOpen(false); // Menutup modal setelah menambah category
+    setIsCategoryModalOpen(false); 
   };
 
     // Fungsi untuk menghitung total transaksi dan jumlah transaksi
@@ -97,25 +98,25 @@ function App() {
     setNewTransactionDescription('');
     setNewTransactionAmount('');
     setNewTransactionDate('');
-    setIsTransactionModalOpen(false); // Menutup modal setelah menambah transaksi
+    setIsTransactionModalOpen(false);
   };
 
   // Fungsi untuk menghapus wallet
   const deleteWallet = (id) => {
     setWallets(wallets.filter(wallet => wallet.id !== id));
-    setIsEditModalOpen(false); // Menutup modal edit setelah hapus wallet
+    setIsEditModalOpen(false);
   };
 
   // Fungsi untuk menghapus category
   const deleteCategory = (id) => {
     setCategories(categories.filter(category => category.id !== id));
-    setIsCategoryEditModalOpen(false); // Menutup modal edit setelah hapus category
+    setIsCategoryEditModalOpen(false);
   };
 
   // Fungsi untuk menghapus transaksi
   const deleteTransaction = (id) => {
     setTransactions(transactions.filter(transaction => transaction.id !== id));
-    setIsTransactionEditModalOpen(false); // Menutup modal edit setelah hapus transaksi
+    setIsTransactionEditModalOpen(false);
   };
 
   // Fungsi untuk memulai edit wallet
@@ -123,7 +124,7 @@ function App() {
     setEditingWallet(wallet);
     setNewWalletName(wallet.name);
     setNewWalletAmount(wallet.amount);
-    setIsEditModalOpen(true); // Buka modal edit
+    setIsEditModalOpen(true);
   };
 
   // Fungsi untuk memulai edit category
@@ -131,7 +132,7 @@ function App() {
     setEditingCategory(category);
     setNewCategoryName(category.name);
     setNewCategoryAmount(category.amount);
-    setIsCategoryEditModalOpen(true); // Buka modal edit category
+    setIsCategoryEditModalOpen(true);
   };
 
   // Fungsi untuk memulai edit transaksi
@@ -140,7 +141,7 @@ function App() {
     setNewTransactionDescription(transaction.description);
     setNewTransactionAmount(transaction.amount);
     setNewTransactionDate(transaction.date);
-    setIsTransactionEditModalOpen(true); // Buka modal edit transaksi
+    setIsTransactionEditModalOpen(true);
   };
 
   // Fungsi untuk menyimpan perubahan wallet yang diedit
@@ -153,7 +154,7 @@ function App() {
     setEditingWallet(null);
     setNewWalletName('');
     setNewWalletAmount('');
-    setIsEditModalOpen(false); // Menutup modal setelah simpan
+    setIsEditModalOpen(false);
   };
 
   // Fungsi untuk menyimpan perubahan category yang diedit
@@ -166,7 +167,7 @@ function App() {
     setEditingCategory(null);
     setNewCategoryName('');
     setNewCategoryAmount('');
-    setIsCategoryEditModalOpen(false); // Menutup modal setelah simpan
+    setIsCategoryEditModalOpen(false);
   };
 
   // Fungsi untuk menyimpan perubahan transaksi yang diedit
@@ -180,7 +181,7 @@ function App() {
     setNewTransactionDescription('');
     setNewTransactionAmount('');
     setNewTransactionDate('');
-    setIsTransactionEditModalOpen(false); // Menutup modal setelah simpan
+    setIsTransactionEditModalOpen(false);
   };
 
   return (

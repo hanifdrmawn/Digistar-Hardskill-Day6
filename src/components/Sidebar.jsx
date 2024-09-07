@@ -16,14 +16,14 @@ const Sidebar = ({
         <Wallets
             wallets={wallets}
             formatRupiah={formatRupiah}
-            startEditing={startEditingWallet}  // Pastikan mengirim startEditingWallet
-            setIsModalOpen={setIsModalOpen}   // Pastikan mengirim setIsModalOpen
+            startEditing={startEditingWallet} 
+            setIsModalOpen={setIsModalOpen}  
         />
         <Categories
             categories={categories}
             formatRupiah={formatRupiah}
-            startEditingCategory={startEditingCategory} // Pastikan mengirim startEditingCategory
-            setIsCategoryModalOpen={setIsCategoryModalOpen} // Pastikan mengirim setIsCategoryModalOpen
+            startEditingCategory={startEditingCategory}
+            setIsCategoryModalOpen={setIsCategoryModalOpen}
         />
         </aside>
     );

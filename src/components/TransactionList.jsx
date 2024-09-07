@@ -1,4 +1,3 @@
-// components/TransactionList.js
 import React from 'react';
 
 const TransactionList = ({ transactions, totalTransactions, totalAmount, formatRupiah, startEditingTransaction, setIsTransactionModalOpen }) => {

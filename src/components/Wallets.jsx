@@ -1,4 +1,3 @@
-// components/Wallets.js
 import React from 'react';
 
 const Wallets = ({ wallets, formatRupiah, startEditing, setIsModalOpen }) => {

@@ -1,4 +1,3 @@
-// components/Categories.js
 import React from 'react';
 
 const Categories = ({ categories, formatRupiah, startEditingCategory, setIsCategoryModalOpen }) => {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import './App.css';
 
 // Fungsi untuk memformat angka menjadi Rupiah
@@ -82,9 +82,9 @@ function App() {
     setIsCategoryModalOpen(false); 
   };
 
-    // Fungsi untuk menghitung total transaksi dan jumlah transaksi
-    const totalTransactions = transactions.length;
-    const totalAmount = transactions.reduce((total, transaction) => total + transaction.amount, 0);
+  // Fungsi untuk menghitung total transaksi dan jumlah transaksi
+  const totalTransactions = transactions.length;
+  const totalAmount = transactions.reduce((total, transaction) => total + transaction.amount, 0);
 
   // Fungsi untuk menambahkan transaksi baru
   const addTransaction = () => {
@@ -189,24 +189,15 @@ function App() {
       {/* Navbar */}
       <nav className="bg-yellow-50 p-4 shadow-sm flex justify-between items-center">
         <div className="flex items-center space-x-8">
-          {/* Logo */}
           <div className="flex items-center space-x-2">
             <div className="w-5 h-5 bg-green-400"></div> {/* Logo Placeholder */}
             <span className="text-xl font-bold text-gray-800">My Wallet</span>
           </div>
-          {/* Search Bar */}
           <input
             type="text"
             placeholder="Search"
             className="px-4 py-2 border rounded-lg focus:outline-none bg-slate-300"
           />
-          {/* Navigation Links */}
-          <div className="flex space-x-6">
-            <a href="#" className="text-gray-600 hover:text-black">Overview</a>
-            <a href="#" className="text-gray-600 hover:text-black">Finance</a>
-            <a href="#" className="text-gray-600 hover:text-black">Calendar</a>
-            <a href="#" className="text-gray-600 hover:text-black">Events</a>
-          </div>
         </div>
 
         {/* User Icon */}
